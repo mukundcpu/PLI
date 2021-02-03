@@ -1,0 +1,50 @@
+ PROGA: PROC OPTIONS(MAIN); 
+ DCL (C,D) FIXED BIN(31); 
+ dcl 1 Payrec,
+	2 Type char,
+	2 Subtype char,
+	2 * char(100);
+	
+ DCL PROGB ENTRY(FIXED BIN(31),FIXED BIN(31)); 
+
+ Readfile:
+ do loop;
+   read file(Payroll) into(Payrec);
+   If Payrec.type = ’E’
+   then leave; /* like goto After_ReadFile */
+   If Payrec.type = ’1’ then
+ do;
+ /* process first part of record */
+ If Payrec.subtype = ’S’
+ then iterate Readfile; /* like goto End_ReadFile */
+ 
+ /* process remainder of record */
+ end;
+ End_ReadFile:
+  end;
+ After_ReadFile:;
+
+
+   FETCH PROGB; 
+   CALL PROGB(C,D); 
+   RELEASE PROGB; 
+
+
+ P: PROCEDURE;
+   DECLARE EV ENTRY VARIABLE,
+        	(E1,E2) ENTRY;
+   EV =  E1;
+   CALL EV;
+ END P;
+
+ sum:proc;
+	DCL	SUM	PIC'9999' init(1000);
+	DCL	A	PIC'999'  init(100);
+	DCL	B	PIC'999'  init(99);
+
+	SUM = A + B;
+  put skip list('sum of A and B :->' sum);
+
+ end sum;
+
+ END PROGA;

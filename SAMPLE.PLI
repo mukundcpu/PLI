@@ -1,0 +1,39 @@
+ A: PROCEDURE OPTIONS(MAIN);
+
+  define alias Name char(31) varying;
+ /* Name has attributes char(31) varying */
+
+ dcl Employee_Name type Name;
+ /* Employee_Name type char(31) varying 
+
+      Put skip list('PROGRAM START');
+  B: BEGIN;
+      PUT SKIP LIST('INSIDE BEGIN');
+      PUT SKIP LIST('CALLING PROCEDURE C');
+
+      CALL C;
+
+      PUT SKIP LIST('JUST AFTER PROCEDURE C');
+
+  END B;
+
+      PUT SKIP LIST('AFTER BLOCK B END');
+      PUT SKIP LIST('PROCEDURE C START');
+
+ C: PROCEDURE;
+      PUT SKIP LIST('INSIDE PROCEDURE C');
+      PUT SKIP LIST('BEFORE BEGIN D:');
+
+   D: BEGIN;
+	PUT SKIP LIST('INSIDE THE BEGIN BLOCK');
+	PUT SKIP LIST('BEFORE GO TO');
+        GO TO LAB;
+        PUT SKIP LIST('JUST AFTER GO TO');
+   END D;
+   PUT SKIP LIST('AFTER BEGIN D');
+ END C;
+
+   PUT SKIP LIST('JUST AFTER END OF PROCEDURE C');
+   LAB: PUT SKIP LIST('STATEMENT OF LAB TAG');
+   PUT SKIP LIST('JUST AFTER LAB TAG');
+ END A;

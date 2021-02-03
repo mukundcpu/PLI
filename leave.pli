@@ -1,0 +1,24 @@
+leave: proce options(main);
+ If Time_to_process_X then
+ A:  do I = lbound(X,1) to hbound(X,1);
+         do J = lbound(X,2) to hbound(X,2);
+            If X(I,J)=0 then
+               leave A;          /* control goes to C, not B */
+            else
+               do;
+                 Put skip list('I am inside the loop');
+               end;
+         end;
+
+      end;
+
+  Else
+
+ B:  do;
+       put skip list('i am inside the B');
+     end;
+
+
+  C:  statement after group A;
+
+ end leave;
